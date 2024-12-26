@@ -6,7 +6,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built JAR from the builder stage
-COPY --from=build /build/auth_service/target/auth_service-0.0.1-SNAPSHOT.jar auth_service.jar
+COPY --from=build /build/discovery_service/target/discovery_service-0.0.1-SNAPSHOT.jar discovery_service.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "auth_service.jar"]
+ENTRYPOINT ["java", "-jar", "discovery_service.jar"]

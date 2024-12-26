@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  maven-build:
+    build:
+      context: .
+      dockerfile: Dockerfile-build
+    image: maven-build:local
+    networks:
+      - microservices-network
+
   auth_service:
     build:
       context: .
@@ -15,7 +23,42 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
+      - maven-build
       - postgres
+    networks:
+      - microservices-network
+    restart: always
+
+  api_gateway:
+    build:
+      context: .
+      dockerfile: ./api_gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_APPLICATION_NAME: api_gateway
+    depends_on:
+      - maven-build
+      - eureka
+    networks:
+      - microservices-network
+    restart: always
+
+  eureka:
+    build:
+      context: .
+      dockerfile: ./discovery_service/Dockerfile
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_APPLICATION_NAME: discovery_service
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: false
+      EUREKA_CLIENT_FETCH_REGISTRY: false
+    depends_on:
+      - maven-build
+    networks:
+      - microservices-network
     restart: always
 
   postgres:
@@ -28,6 +71,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
     restart: always
 
   mongo:
@@ -39,6 +84,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - microservices-network
     restart: always
 
   rabbitmq:
@@ -49,7 +96,13 @@ services:
     ports:
       - "5672:5672"   # Main RabbitMQ port
       - "15672:15672" # Management console
+    networks:
+      - microservices-network
     restart: always
+
+networks:
+  microservices-network:
+    driver: bridge
 
 volumes:
   postgres_data:
