@@ -1,108 +1,38 @@
+# Local Development docker-compose.yml
+# Running only DBs and RabbitMQ to access it from locally run services
+# Full network of microsevices will be composed in docker-compose.prod.yml
 version: '3.8'
 
 services:
-  maven-build:
-    build:
-      context: .
-      dockerfile: Dockerfile-build
-    image: maven-build:local
-    networks:
-      - microservices-network
-
-  auth_service:
-    build:
-      context: .
-      dockerfile: ./auth_service/Dockerfile
-    ports:
-      - "8081:8081"
-    environment:
-      SPRING_DATASOURCE_HOST: "postgres"
-      SPRING_DATASOURCE_PORT: 5432
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    depends_on:
-      - maven-build
-      - postgres
-    networks:
-      - microservices-network
-    restart: always
-
-  api_gateway:
-    build:
-      context: .
-      dockerfile: ./api_gateway/Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/
-      SPRING_APPLICATION_NAME: api_gateway
-    depends_on:
-      - maven-build
-      - eureka
-    networks:
-      - microservices-network
-    restart: always
-
-  eureka:
-    build:
-      context: .
-      dockerfile: ./discovery_service/Dockerfile
-    ports:
-      - "8761:8761"
-    environment:
-      SPRING_APPLICATION_NAME: discovery_service
-      EUREKA_CLIENT_REGISTER_WITH_EUREKA: false
-      EUREKA_CLIENT_FETCH_REGISTRY: false
-    depends_on:
-      - maven-build
-    networks:
-      - microservices-network
-    restart: always
-
   postgres:
     image: postgres:16.6
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-dev}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - microservices-network
-    restart: always
 
   mongo:
     image: mongo:7.0.16
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-mongo}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-mongo}
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    networks:
-      - microservices-network
-    restart: always
 
   rabbitmq:
     image: rabbitmq:3.13.7-management
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-guest}
     ports:
-      - "5672:5672"   # Main RabbitMQ port
-      - "15672:15672" # Management console
-    networks:
-      - microservices-network
-    restart: always
-
-networks:
-  microservices-network:
-    driver: bridge
+      - "5672:5672"
+      - "15672:15672"
 
 volumes:
   postgres_data:

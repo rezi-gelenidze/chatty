@@ -9,17 +9,8 @@ COPY auth_service/pom.xml auth_service/
 COPY api_gateway/pom.xml api_gateway/
 COPY discovery_service/pom.xml discovery_service/
 
-# Download all dependencies first (this layer can be cached)
-RUN mvn dependency:go-offline -B
-
 # Copy all source code
 COPY . .
 
 # Build all modules
 RUN mvn clean package -DskipTests
-
-# The built JARs will now be available at:
-# /build/auth_service/target/*.jar
-# /build/api_gateway/target/*.jar
-# /build/discovery_service/target/*.jar
-# etc...
