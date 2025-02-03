@@ -1,8 +1,6 @@
 package io.github.rezi_gelenidze.chatty.auth_service.controllers;
 
-import io.github.rezi_gelenidze.chatty.auth_service.dto.LoginRequest;
-import io.github.rezi_gelenidze.chatty.auth_service.dto.RegisterRequest;
-import io.github.rezi_gelenidze.chatty.auth_service.dto.TokenRefreshRequest;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.*;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.service.AuthService;
 import io.github.rezi_gelenidze.chatty.auth_service.service.UserService;
@@ -76,5 +74,17 @@ public class AuthController {
         String newAccessToken = jwtUtil.generateToken(username);
 
         return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyToken(@RequestBody TokenVerifyRequest request) {
+        String token = request.getAccessToken();
+        String username = jwtUtil.extractUsername(token);
+
+        if (!jwtUtil.isTokenValid(token, username)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid or expired token"));
+        }
+
+        return ResponseEntity.ok(new TokenVerifyResponse(username));
     }
 }
