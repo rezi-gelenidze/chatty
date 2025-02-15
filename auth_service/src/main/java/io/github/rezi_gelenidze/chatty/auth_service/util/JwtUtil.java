@@ -48,16 +48,8 @@ public class JwtUtil {
     /**
      * Checks if the token has expired.
      */
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
-    }
-
-    /**
-     * Validates the token against the username and checks if it's expired.
-     */
-    public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = this.extractUsername(token);
-        return extractedUsername.equals(username) && !this.isTokenExpired(token);
     }
 
     /**

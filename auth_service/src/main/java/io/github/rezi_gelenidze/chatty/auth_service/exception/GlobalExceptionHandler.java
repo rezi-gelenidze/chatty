@@ -1,12 +1,14 @@
 package io.github.rezi_gelenidze.chatty.auth_service.exception;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.ErrorResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
