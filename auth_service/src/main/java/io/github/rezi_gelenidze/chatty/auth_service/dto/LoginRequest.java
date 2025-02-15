@@ -1,13 +1,14 @@
 package io.github.rezi_gelenidze.chatty.auth_service.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import io.github.rezi_gelenidze.chatty.auth_service.validation.*;
 
 @Data
 public class LoginRequest {
-    @NotBlank(message = "'username' field is required.")
+    @ValidUsername
     private String username;
 
-    @NotBlank(message = "'password' field is required.")
+    @ValidPassword
     private String password;
 }

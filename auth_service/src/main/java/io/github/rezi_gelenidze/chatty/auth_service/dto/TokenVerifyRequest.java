@@ -1,5 +1,7 @@
 package io.github.rezi_gelenidze.chatty.auth_service.dto;
 
+import io.github.rezi_gelenidze.chatty.auth_service.constants.ValidationConstants;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TokenVerifyRequest {
-    @NotBlank(message = "Access token is required")
+    @NotBlank(message = ValidationConstants.ACCESS_TOKEN_REQUIRED_MESSAGE)
     private String accessToken;
 }
