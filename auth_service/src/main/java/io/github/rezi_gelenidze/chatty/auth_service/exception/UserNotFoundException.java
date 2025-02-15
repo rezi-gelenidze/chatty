@@ -1,7 +1,9 @@
 package io.github.rezi_gelenidze.chatty.auth_service.exception;
 
-public class UserNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class UserNotFoundException extends ApiException {
     public UserNotFoundException(String message) {
-        super(message);
+        super("USER_NOT_FOUND", message, HttpStatus.NOT_FOUND);
     }
 }
