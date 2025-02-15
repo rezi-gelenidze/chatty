@@ -11,23 +11,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Transactional
-    public User createUser(RegisterRequest registerRequest) {
+    public void createUser(RegisterRequest registerRequest) {
         // Check if username or email already exists
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
+        if (userRepository.existsByUsername(registerRequest.getUsername()))
             throw new IllegalArgumentException("Username is already taken");
-        }
 
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+        if (userRepository.existsByEmail(registerRequest.getEmail()))
             throw new IllegalArgumentException("Email is already registered");
-        }
 
         // Create new user instance
         User user = new User();
@@ -43,6 +44,6 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         // Save and return the new user
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 }

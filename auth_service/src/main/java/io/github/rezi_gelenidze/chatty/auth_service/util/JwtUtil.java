@@ -3,8 +3,8 @@ package io.github.rezi_gelenidze.chatty.auth_service.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -56,8 +56,8 @@ public class JwtUtil {
      * Validates the token against the username and checks if it's expired.
      */
     public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = extractUsername(token);
-        return (extractedUsername.equals(username) && !isTokenExpired(token));
+        final String extractedUsername = this.extractUsername(token);
+        return extractedUsername.equals(username) && !this.isTokenExpired(token);
     }
 
     /**
