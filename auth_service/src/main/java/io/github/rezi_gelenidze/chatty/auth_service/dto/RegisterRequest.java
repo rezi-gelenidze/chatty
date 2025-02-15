@@ -15,9 +15,11 @@ import lombok.*;
 @PasswordMatch(message = ValidationConstants.PASSWORD_MISMATCH_MESSAGE)
 public class RegisterRequest {
     @ValidUsername
+    @UniqueUsername
     private String username;
 
     @ValidEmail
+    @UniqueEmail
     private String email;
 
     @ValidPassword

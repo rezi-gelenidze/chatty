@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Map;
-
 
 @RestController
 @RequestMapping("/auth")
@@ -20,13 +18,6 @@ public class AuthController {
     @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginRequest loginRequest) {
-        Map<String, String> tokens = authService.login(loginRequest);
-
-        return ResponseEntity.ok(tokens);
     }
 
     @PostMapping("/register")

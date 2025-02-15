@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponse response = new ErrorResponse(
                 "VALIDATION_ERROR",
-                "Validation failed",
+                "Validation Error",
                 errors
         );
 

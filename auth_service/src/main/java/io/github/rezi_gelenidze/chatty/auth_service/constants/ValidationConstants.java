@@ -31,7 +31,7 @@ public class ValidationConstants {
     public static final int NAME_MAX_LENGTH = 255;
     public static final String NAME_REGEX = "^[\\p{L}\\s'-]+$";
 
-    public static final String NAME_REQUIRED_MESSAGE = "\"firstName\" & \"lastName\" fields are required.";
+    public static final String NAME_REQUIRED_MESSAGE = "Name field is required.";
     public static final String NAME_REGEX_MESSAGE = "Name can only contain letters from any language, spaces, and hyphens.";
     public static final String NAME_LENGTH_MESSAGE = "Name must be between " + NAME_MIN_LENGTH + " and " + NAME_MAX_LENGTH + " characters.";
 

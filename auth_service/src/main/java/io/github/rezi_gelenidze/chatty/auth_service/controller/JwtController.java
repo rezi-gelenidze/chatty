@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -19,9 +21,18 @@ public class JwtController {
         this.jwtService = jwtService;
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginRequest request) {
+        Map<String, String> tokens = jwtService.generateAccessToken(
+                request.getUsername(), request.getPassword()
+        );
+
+        return ResponseEntity.ok(tokens);
+    }
+
     @PostMapping("/refresh")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody @Valid TokenRefreshRequest request) {
-        String accessToken = jwtService.refreshToken(request.getRefreshToken());
+        String accessToken = jwtService.generateRefreshToken(request.getRefreshToken());
 
         return ResponseEntity.ok(new TokenRefreshResponse(accessToken));
     }

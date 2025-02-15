@@ -15,46 +15,27 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Use a secure and properly sized key
     private static final String SECRET_KEY = "super_secure_secret_key_that_is_at_least_32_bytes_long";
     private final Key signingKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
-    /**
-     * Extracts the username (subject) from the token.
-     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /**
-     * Extracts a specific claim from the token.
-     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    /**
-     * Extracts all claims from the token.
-     */
-    private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
+        final Claims claims = Jwts.parserBuilder()
                 .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
+        return claimsResolver.apply(claims);
     }
 
-    /**
-     * Checks if the token has expired.
-     */
     public boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
-    /**
-     * Generates a JWT access token for a given username.
-     */
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -66,9 +47,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    /**
-     * Generates a refresh token for a given username.
-     */
     public String generateRefreshToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
