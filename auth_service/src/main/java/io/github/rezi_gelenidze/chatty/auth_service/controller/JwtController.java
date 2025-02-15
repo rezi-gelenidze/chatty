@@ -39,7 +39,7 @@ public class JwtController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyToken(@RequestBody TokenVerifyRequest request) {
+    public ResponseEntity<?> verifyToken(@RequestBody @Valid TokenVerifyRequest request) {
         String token = request.getAccessToken();
         String username = jwtUtil.extractUsername(token);
 
