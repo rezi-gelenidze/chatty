@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth/jwt")
 public class JwtController {
     private final JwtService jwtService;
 
@@ -21,8 +21,8 @@ public class JwtController {
         this.jwtService = jwtService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginRequest request) {
+    @PostMapping("/create")
+    public ResponseEntity<Map<String, String>> createTokenPair(@RequestBody @Valid LoginRequest request) {
         Map<String, String> tokens = jwtService.login(request.getUsername(), request.getPassword());
 
         return ResponseEntity.ok(tokens);

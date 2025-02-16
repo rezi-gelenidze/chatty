@@ -11,19 +11,19 @@ import java.util.Map;
 
 @Service
 public class JwtService {
-    private final AuthService authService;
+    private final UserService userService;
 
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public JwtService(AuthService authService, JwtUtil jwtUtil) {
-        this.authService = authService;
+    public JwtService(UserService userService, JwtUtil jwtUtil) {
+        this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
 
     public Map<String, String> login(String username, String password) {
         // Authenticate user
-        boolean isAuthenticated = authService.validateUser(username, password);
+        boolean isAuthenticated = userService.validateUser(username, password);
         if (!isAuthenticated)
             throw new InvalidCredentialsException("Invalid credentials");
 

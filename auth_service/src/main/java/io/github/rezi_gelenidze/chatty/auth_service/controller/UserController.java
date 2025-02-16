@@ -2,7 +2,7 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.*;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
-import io.github.rezi_gelenidze.chatty.auth_service.service.AuthService;
+import io.github.rezi_gelenidze.chatty.auth_service.service.UserService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,18 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
-    private final AuthService authService;
+@RequestMapping("/auth/user")
+public class UserController {
+    private final UserService userService;
 
     @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/")
     public ResponseEntity<RegisterResponse> registerUser(@RequestBody @Valid RegisterRequest userData) {
-        User createdUser = authService.createUser(userData);
+        User createdUser = userService.createUser(userData);
 
         return ResponseEntity.ok(
                 new RegisterResponse(
