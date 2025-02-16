@@ -23,16 +23,15 @@ public class JwtController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginRequest request) {
-        Map<String, String> tokens = jwtService.generateAccessToken(
-                request.getUsername(), request.getPassword()
-        );
+        Map<String, String> tokens = jwtService.login(request.getUsername(), request.getPassword());
 
         return ResponseEntity.ok(tokens);
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody @Valid TokenRefreshRequest request) {
-        String accessToken = jwtService.generateRefreshToken(request.getRefreshToken());
+        // Assert that given token type is refresh token
+        String accessToken = jwtService.generateAccessTokenFromRefresh(request.getRefreshToken());
 
         return ResponseEntity.ok(new TokenRefreshResponse(accessToken));
     }
