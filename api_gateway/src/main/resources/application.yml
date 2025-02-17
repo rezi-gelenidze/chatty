@@ -18,6 +18,12 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
 
 eureka:
   client:
