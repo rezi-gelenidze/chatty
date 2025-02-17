@@ -43,12 +43,12 @@ function LandingPage() {
                 <div className="mt-6 w-full max-w-sm flex flex-col space-y-4">
                     {/* Sign In and Sign Up in a Row */}
                     <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                        <Link to="/signin" className="w-full">
+                        <Link to="/login" className="w-full">
                             <Button className="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                                 Log in
                             </Button>
                         </Link>
-                        <Link to="/signup" className="w-full">
+                        <Link to="/register" className="w-full">
                             <Button className="w-full p-6 bg-gray-300 text-black rounded-lg hover:bg-gray-400">
                                 Sign up
                             </Button>
