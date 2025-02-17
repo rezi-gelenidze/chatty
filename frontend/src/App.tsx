@@ -1,11 +1,16 @@
-import { Button } from "@/components/ui/button"
+import { Routes, Route } from "react-router-dom";
+
+import LandingPage from "./pages/LandingPage.tsx";
 
 function App() {
-  return (
-    <>
-        <Button>Hello World</Button>
-    </>
-  )
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="*" element={<div>404</div>} />
+            </Routes>
+        </div>
+    );
 }
 
-export default App
+export default App;
