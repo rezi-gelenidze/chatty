@@ -1,6 +1,6 @@
 package io.github.rezi_gelenidze.chatty.auth_service.controller;
 
-import io.github.rezi_gelenidze.chatty.auth_service.dto.*;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.jwt.*;
 import io.github.rezi_gelenidze.chatty.auth_service.service.JwtService;
 
 import jakarta.validation.Valid;
@@ -22,10 +22,10 @@ public class JwtController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, String>> createTokenPair(@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<LoginResponse> createTokenPair(@RequestBody @Valid LoginRequest request) {
         Map<String, String> tokens = jwtService.login(request.getUsername(), request.getPassword());
 
-        return ResponseEntity.ok(tokens);
+        return ResponseEntity.ok(new LoginResponse(tokens.get("accessToken"), tokens.get("refreshToken")));
     }
 
     @PostMapping("/refresh")

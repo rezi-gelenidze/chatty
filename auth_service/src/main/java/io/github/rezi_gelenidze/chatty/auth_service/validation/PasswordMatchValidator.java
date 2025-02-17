@@ -1,6 +1,6 @@
 package io.github.rezi_gelenidze.chatty.auth_service.validation;
 
-import io.github.rezi_gelenidze.chatty.auth_service.dto.RegisterRequest;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

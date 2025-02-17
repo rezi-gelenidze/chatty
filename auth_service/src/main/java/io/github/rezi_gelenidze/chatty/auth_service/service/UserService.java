@@ -1,6 +1,6 @@
 package io.github.rezi_gelenidze.chatty.auth_service.service;
 
-import io.github.rezi_gelenidze.chatty.auth_service.dto.RegisterRequest;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.user.*;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.repository.UserRepository;
 import io.github.rezi_gelenidze.chatty.auth_service.exception.UserNotFoundException;
@@ -46,5 +46,14 @@ public class UserService {
 
         // Save and return the new user
         return userRepository.save(user);
+    }
+
+    public User getUser(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+    }
+
+    public void removeUser(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        userRepository.delete(user);
     }
 }

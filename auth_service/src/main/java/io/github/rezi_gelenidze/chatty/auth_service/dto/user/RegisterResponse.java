@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.dto;
+package io.github.rezi_gelenidze.chatty.auth_service.dto.user;
 
 import java.time.LocalDate;
 

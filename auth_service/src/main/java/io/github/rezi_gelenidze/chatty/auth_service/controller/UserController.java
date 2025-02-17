@@ -1,6 +1,7 @@
 package io.github.rezi_gelenidze.chatty.auth_service.controller;
 
-import io.github.rezi_gelenidze.chatty.auth_service.dto.*;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterRequest;
+import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterResponse;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.service.UserService;
 

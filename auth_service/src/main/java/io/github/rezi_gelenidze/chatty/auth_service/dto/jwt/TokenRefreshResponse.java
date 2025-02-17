@@ -1,9 +1,7 @@
-package io.github.rezi_gelenidze.chatty.auth_service.dto;
+package io.github.rezi_gelenidze.chatty.auth_service.dto.jwt;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
