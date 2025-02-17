@@ -23,6 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for APIs
+                .cors(AbstractHttpConfigurer::disable) // Disable CORS for APIs
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/jwt/**").permitAll()
                         .requestMatchers("/auth/users/me").authenticated()
