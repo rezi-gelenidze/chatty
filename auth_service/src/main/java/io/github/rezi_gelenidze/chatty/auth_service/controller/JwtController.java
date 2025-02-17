@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/auth/jwt")
+@RequestMapping("/jwt")
 public class JwtController {
     private final JwtService jwtService;
 

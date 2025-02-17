@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/auth/users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
