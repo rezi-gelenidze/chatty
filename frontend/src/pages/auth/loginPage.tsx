@@ -1,27 +1,47 @@
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button.tsx";
+import { useNavigate, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import LogoLight from "@/assets/media/logo-light.png";
+import authService from "@/services/authService";
 
-function LoginPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [errorMessage, setErrorMessage] = useState("");
+interface LoginFormInputs {
+    username: string;
+    password: string;
+}
 
-    const onSubmit = async (data: any) => {
-        console.log("Login Data:", data);
+const LoginPage: React.FC = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    const onSubmit = async (data: LoginFormInputs) => {
+        setErrorMessage(null);
+        const response = await authService.login(data.username, data.password);
+
+        if (response.success) {
+            // Store access & refresh tokens
+            localStorage.setItem("jwt-access", response.data.accessToken);
+            localStorage.setItem("jwt-refresh", response.data.refreshToken);
+
+            // Redirect to dashboard or home
+            navigate("/chat");
+        } else {
+            console.error(response.error);
+            setErrorMessage("Login failed. Please try again.");
+        }
     };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen w-full bg-[#121212] text-white px-4">
-            {/* Logo - Positioned Top Left on Large Screens, Centered on Mobile */}
+            {/* Logo */}
             <Link to="/" className="flex w-full justify-center items-center my-6 md:justify-start">
                 <img src={LogoLight} alt="Chatty Logo" className="w-6 md:w-10 h-6 md:h-10" />
                 <h1 className="text-2xl md:text-3xl font-bold pl-2">Chatty</h1>
             </Link>
 
-            {/* Login Container - Centers Form Properly */}
+            {/* Login Container */}
             <div className="flex flex-1 w-full items-start justify-center">
                 <div className="bg-[#1E1E1E] p-8 md:p-10 rounded-lg shadow-lg w-full max-w-sm md:max-w-md">
                     <h2 className="text-2xl font-semibold text-center">Sign in</h2>
@@ -87,6 +107,6 @@ function LoginPage() {
             </div>
         </div>
     );
-}
+};
 
 export default LoginPage;
