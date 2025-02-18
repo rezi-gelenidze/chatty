@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import LogoLight from "@/assets/media/logo-light.png";
+
 import authService from "@/services/authService";
+import {AuthContext} from "@/contexts/authContext.tsx";
 
 interface LoginFormInputs {
     username: string;
@@ -13,6 +15,7 @@ interface LoginFormInputs {
 
 const LoginPage: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+    const { updateUserState } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -25,8 +28,11 @@ const LoginPage: React.FC = () => {
             localStorage.setItem("jwt-access", response.data.accessToken);
             localStorage.setItem("jwt-refresh", response.data.refreshToken);
 
-            // Redirect to dashboard or home
-            navigate("/chat");
+            await updateUserState();
+
+            // Redirect to ?next or home
+            const nextUrl = new URLSearchParams(window.location.search).get("next");
+            navigate(nextUrl ? nextUrl : "/chat");
         } else {
             console.error(response.error);
             setErrorMessage("Login failed. Please try again.");

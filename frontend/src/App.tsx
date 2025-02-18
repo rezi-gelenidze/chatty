@@ -12,6 +12,8 @@ import TokenExpireDialog from "./components/modals/tokenExpireDialog.tsx";
 
 // Public Views
 import LandingPage from "./pages/landingPage.tsx";
+import PrivacyPage from "@/pages/misc/privacyPage.tsx";
+import TermsPage from "@/pages/misc/termsPage.tsx";
 
 // Auth Page Views
 import LoginPage from "./pages/auth/loginPage.tsx";
@@ -45,6 +47,8 @@ const App: React.FC = () => {
             <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<LandingPage/>}/>
+                <Route path="/privacy" element={<PrivacyPage/>}/>
+                <Route path="/terms" element={<TermsPage/>}/>
 
                 {/* Auth Routes */}
                 <Route path="/login" element={<LoginPage/>}/>

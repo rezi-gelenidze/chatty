@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext.tsx";
-import LoadingPage from "../../pages/loadingPage.tsx";
+import LoadingPage from "../../pages/misc/loadingPage.tsx";
 
 const ProtectedRoute: React.FC = () => {
     const authContext = useContext(AuthContext);
