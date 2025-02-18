@@ -2,13 +2,12 @@ import React, {useState} from "react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {Dialog, DialogContent, DialogHeader, DialogTrigger} from "@/components/ui/dialog";
 import {Tooltip, TooltipContent, TooltipTrigger, TooltipProvider} from "@/components/ui/tooltip";
 import {Send, Paperclip, Mic, Video, Image, Phone, MoreHorizontal} from "lucide-react";
 import clsx from "clsx";
-import format from "date-fns/format";
+import { Link } from "react-router-dom";
 
-import LigthLogo from "../../assets/media/logo-light.png";
+import LightLogo from "../../assets/media/logo-light.png";
 
 const chats = [
     {id: 1, name: "John Doe", lastMessage: "Hey, how are you?", time: "10:30 AM", avatar: ""},
@@ -28,23 +27,30 @@ const ChatPage: React.FC = () => {
                     {/* Logo & Profile */}
                     <div className="flex items-center justify-between p-4 border-b border-gray-700">
                         <div className="flex items-center">
-                            <img src={LigthLogo} alt="Chatty Logo" className="h-6"/>
+                            <img src={LightLogo} alt="Chatty Logo" className="h-6"/>
                             <h1 className="text-xl font-bold ml-1">Chatty</h1>
                         </div>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button variant="ghost">
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    className="hover:bg-transparent"
+                                >
                                     <Avatar>
-                                        <AvatarImage src=""/>
-                                        <AvatarFallback>R</AvatarFallback>
+                                        <AvatarImage src="" alt="User Avatar" />
+                                        <AvatarFallback className="text-black">R</AvatarFallback>
                                     </Avatar>
                                 </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-[#1E1E1E] text-white">
-                                <DialogHeader>Profile Settings</DialogHeader>
-                                <p className="text-sm text-gray-400">Coming soon...</p>
-                            </DialogContent>
-                        </Dialog>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" align="center">
+                                <Link to="/logout">
+                                    <Button variant="ghost" className="hover:bg-transparent hover:text-gray-400 text-white">
+                                        Logout
+                                    </Button>
+                                </Link>
+                            </TooltipContent>
+                        </Tooltip>
+
                     </div>
 
                     {/* Chat List */}

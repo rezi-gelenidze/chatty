@@ -18,6 +18,7 @@ import LoginPage from "./pages/auth/loginPage.tsx";
 import RegisterPage from "./pages/auth/registerPage.tsx";
 import PasswordResetPage from "./pages/auth/passwordResetPage.tsx";
 import PasswordResetConfirmPage from "./pages/auth/passwordResetConfirmPage.tsx";
+import LogoutPage from "@/pages/auth/logoutPage.tsx";
 
 // Chat Page Views
 import ChatPage from "./pages/chat/chatPage.tsx";
@@ -50,6 +51,9 @@ const App: React.FC = () => {
                 <Route path="/register" element={<RegisterPage/>}/>
                 <Route path="/reset-password" element={<PasswordResetPage/>}/>
                 <Route path="/reset-password-confirm" element={<PasswordResetConfirmPage/>}/>
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/logout" element={<LogoutPage />}/>
+                </Route>
 
                 {/* Chat Routes */}
                 <Route element={<ProtectedRoute />}>

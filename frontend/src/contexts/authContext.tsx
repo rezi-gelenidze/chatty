@@ -17,7 +17,13 @@ interface AuthContextType {
 }
 
 // Create an authentication context
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType>({
+    currentUser: null,
+    setCurrentUser: () => {},  // Provide a default empty function to avoid undefined
+    updateUserState: async () => {},
+    isLoading: true,
+    isAuthenticated: false,
+});
 
 interface AuthProviderProps {
     children: ReactNode;
