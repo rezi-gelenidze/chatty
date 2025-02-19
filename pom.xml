@@ -20,7 +20,7 @@
 		<module>auth_service</module>
         <module>api_gateway</module>
 		<module>discovery_service</module>
-        <module>chat-service</module>
+        <module>chat_service</module>
     </modules>
 
 	<properties>
