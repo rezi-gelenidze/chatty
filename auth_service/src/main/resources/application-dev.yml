@@ -34,8 +34,12 @@ spring:
 app:
   base-url: ${APP_BASE_URL}
   app-name: ${APP_NAME}
-  jwt-secret-key: ${APP_JWT_SECRET_KEY}
-  hmac-secret-key: ${APP_HMAC_SECRET_KEY}
+  secrets:
+    jwt-secret-key: ${APP_JWT_SECRET_KEY}
+    hmac-secret-key: ${APP_HMAC_SECRET_KEY}
+  redirects:
+    email-activation-redirect-path: ${APP_EMAIL_ACTIVATION_REDIRECT_PATH}
+    password-reset-redirect-path: ${APP_PASSWORD_RESET_REDIRECT_PATH}
 
 management:
   endpoints:
