@@ -1,6 +1,7 @@
 package io.github.rezi_gelenidze.chatty.auth_service.service;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.*;
+import io.github.rezi_gelenidze.chatty.auth_service.entity.Profile;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.repository.UserRepository;
 import io.github.rezi_gelenidze.chatty.auth_service.exception.UserNotFoundException;
@@ -33,18 +34,25 @@ public class UserService {
     @Transactional
     public User createUser(RegisterRequest registerRequest) {
         User user = new User();
+        Profile profile = new Profile();
 
         // Map RegisterRequest fields to User entity
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
-        user.setFirstName(registerRequest.getFirstName());
-        user.setLastName(registerRequest.getLastName());
-        user.setDateOfBirth(registerRequest.getDateOfBirth());
+
+        // Map RegisterRequest fields to Profile entity
+        profile.setFirstName(registerRequest.getFirstName());
+        profile.setLastName(registerRequest.getLastName());
+        profile.setDateOfBirth(registerRequest.getDateOfBirth());
+
+        // Set the user and profile references
+        user.setProfile(profile);
+        profile.setUser(user);
 
         // Hash the password
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        // Save and return the new user
+        // Save and return the new user and profile
         return userRepository.save(user);
     }
 

@@ -2,6 +2,7 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterResponse;
+import io.github.rezi_gelenidze.chatty.auth_service.entity.Profile;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.service.UserService;
 
@@ -25,14 +26,15 @@ public class UserController {
     @PostMapping
     public ResponseEntity<RegisterResponse> registerUser(@RequestBody @Valid RegisterRequest userData) {
         User createdUser = userService.createUser(userData);
+        Profile createdUserProfile = createdUser.getProfile();
 
         return ResponseEntity.ok(
                 new RegisterResponse(
                         createdUser.getUsername(),
                         createdUser.getEmail(),
-                        createdUser.getFirstName(),
-                        createdUser.getLastName(),
-                        createdUser.getDateOfBirth()
+                        createdUserProfile.getFirstName(),
+                        createdUserProfile.getLastName(),
+                        createdUserProfile.getDateOfBirth()
                 )
         );
     }
@@ -42,14 +44,15 @@ public class UserController {
         String username = SecurityUtil.getCurrentUsername();
 
         User user = userService.getUser(username);
+        Profile userProfile = user.getProfile();
 
         return ResponseEntity.ok(
                 new RegisterResponse(
                         user.getUsername(),
                         user.getEmail(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getDateOfBirth()
+                        userProfile.getFirstName(),
+                        userProfile.getLastName(),
+                        userProfile.getDateOfBirth()
                 )
         );
     }
