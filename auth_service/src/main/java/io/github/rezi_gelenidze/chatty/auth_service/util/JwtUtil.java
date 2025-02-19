@@ -4,7 +4,7 @@ import io.github.rezi_gelenidze.chatty.auth_service.exception.TokenInvalidExcept
 import io.github.rezi_gelenidze.chatty.auth_service.exception.TokenExpiredException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -18,14 +18,15 @@ public class JwtUtil {
         ACCESS, REFRESH
     }
 
-    private static final String SECRET_KEY = "super_secure_secret_key_that_is_at_least_32_bytes_long";
+    private final Key signingKey;
 
-    private final Key signingKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    public JwtUtil(@Value("${app.jwt-secret-key}") String secretKey) {
+        this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         try {
             final Claims claims = Jwts.parserBuilder().setSigningKey(signingKey).build().parseClaimsJws(token).getBody();
-
             return claimsResolver.apply(claims);
         } catch (ExpiredJwtException ex) {
             throw new TokenExpiredException("JWT token has expired");
