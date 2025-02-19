@@ -1,6 +1,7 @@
-package io.github.rezi_gelenidze.chatty.auth_service.service;
+package io.github.rezi_gelenidze.chatty.auth_service.service.jwt;
 
 import io.github.rezi_gelenidze.chatty.auth_service.exception.InvalidCredentialsException;
+import io.github.rezi_gelenidze.chatty.auth_service.service.user.UserService;
 import io.github.rezi_gelenidze.chatty.auth_service.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

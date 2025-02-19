@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.service;
+package io.github.rezi_gelenidze.chatty.auth_service.service.jwt;
 
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
 import io.github.rezi_gelenidze.chatty.auth_service.repository.UserRepository;
