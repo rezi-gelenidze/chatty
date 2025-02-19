@@ -4,7 +4,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URI}
     fetch-registry: true
     register-with-eureka: true
 
@@ -12,9 +12,9 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/chatty
-    username: admin
-    password: admin
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -24,14 +24,18 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-id: ""
-#            client-secret: ""
-#            scope: email
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+app:
+  base-url: ${APP_BASE_URL}
+  app-name: ${APP_NAME}
+  jwt-secret-key: ${APP_JWT_SECRET_KEY}
+  hmac-secret-key: ${APP_HMAC_SECRET_KEY}
 
 management:
   endpoints:
