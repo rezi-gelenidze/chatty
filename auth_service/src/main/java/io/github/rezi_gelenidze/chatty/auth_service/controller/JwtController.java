@@ -1,7 +1,7 @@
 package io.github.rezi_gelenidze.chatty.auth_service.controller;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.jwt.*;
-import io.github.rezi_gelenidze.chatty.auth_service.service.JwtService;
+import io.github.rezi_gelenidze.chatty.auth_service.service.jwt.JwtService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
