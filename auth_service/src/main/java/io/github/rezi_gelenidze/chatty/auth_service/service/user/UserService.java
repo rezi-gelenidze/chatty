@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.service;
+package io.github.rezi_gelenidze.chatty.auth_service.service.user;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.*;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.Profile;
@@ -18,10 +18,13 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final EmailVerificationService emailVerificationService;
+
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailVerificationService emailVerificationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailVerificationService = emailVerificationService;
     }
 
     public boolean validateUser(String username, String rawPassword) {
@@ -52,8 +55,13 @@ public class UserService {
         // Hash the password
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
-        // Save and return the new user and profile
-        return userRepository.save(user);
+        // Save the user
+        User savedUser = userRepository.save(user);
+
+        // Send verification email
+        emailVerificationService.sendEmailVerificationEmail(savedUser.getEmail());
+
+        return savedUser;
     }
 
     public User getUser(String username) {
