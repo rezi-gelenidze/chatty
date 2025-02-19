@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Activation</title>
+</head>
+<body>
+
+<div th:replace="fragments.html :: dark-wrapper(${app_name} + ' - Account Activation')">
+    <div th:fragment="content">
+        <p>You can activate your account from this URL:</p>
+        <p>
+            <a th:href="${activationUrl}" th:text="${activationUrl}"></a>
+        </p>
+        <p th:text="${app_name}"></p>
+    </div>
+</div>
+
+</body>
+</html>
