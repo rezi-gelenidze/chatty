@@ -20,7 +20,7 @@ public class JwtUtil {
 
     private final Key signingKey;
 
-    public JwtUtil(@Value("${app.jwt-secret-key}") String secretKey) {
+    public JwtUtil(@Value("${app.secrets.jwt-secret-key}") String secretKey) {
         this.signingKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
