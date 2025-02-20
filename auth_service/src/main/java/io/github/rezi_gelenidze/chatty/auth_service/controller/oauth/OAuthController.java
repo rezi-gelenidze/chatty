@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.controller;
+package io.github.rezi_gelenidze.chatty.auth_service.controller.oauth;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

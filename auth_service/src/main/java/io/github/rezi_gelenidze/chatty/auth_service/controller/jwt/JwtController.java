@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.controller;
+package io.github.rezi_gelenidze.chatty.auth_service.controller.jwt;
 
 import io.github.rezi_gelenidze.chatty.auth_service.dto.jwt.*;
 import io.github.rezi_gelenidze.chatty.auth_service.service.jwt.JwtService;
