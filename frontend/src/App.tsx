@@ -24,6 +24,8 @@ import LogoutPage from "@/pages/auth/logoutPage.tsx";
 
 // Chat Page Views
 import ChatPage from "./pages/chat/chatPage.tsx";
+import EmailVerificationNotify from "@/pages/auth/emailVerificationNotify.tsx";
+import EmailVerificationConfirm from "@/pages/auth/emailVerificationConfirm.tsx";
 
 
 const App: React.FC = () => {
@@ -53,15 +55,21 @@ const App: React.FC = () => {
                 {/* Auth Routes */}
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/reset-password" element={<PasswordResetPage/>}/>
-                <Route path="/reset-password-confirm" element={<PasswordResetConfirmPage/>}/>
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/logout" element={<LogoutPage />}/>
+                <Route element={<ProtectedRoute/>}>
+                    <Route path="/logout" element={<LogoutPage/>}/>
                 </Route>
 
+                {/* Password Reset */}
+                <Route path="/reset-password" element={<PasswordResetPage/>}/>
+                <Route path="/reset-password-confirm" element={<PasswordResetConfirmPage/>}/>
+
+                {/* Email Verification */}
+                <Route path="/verify-email" element={<EmailVerificationNotify/>}/>
+                <Route path="/verify-email-confirm/" element={<EmailVerificationConfirm/>}/>
+
                 {/* Chat Routes */}
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/chat" element={<ChatPage />} />
+                <Route element={<ProtectedRoute/>}>
+                    <Route path="/chat" element={<ChatPage/>}/>
                 </Route>
 
                 {/* Catch-All: Redirect to Landing */}

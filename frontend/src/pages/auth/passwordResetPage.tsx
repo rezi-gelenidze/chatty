@@ -3,22 +3,34 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
 import FormContainer from "@/components/container/FormContainer.tsx";
+import authService from "@/services/authService.ts";
 
 function PasswordResetPage() {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
     const [isDisabled, setIsDisabled] = useState(false);
 
     const onSubmit = async (data: any) => {
-        console.log("Password Reset Request:", data);
         setIsDisabled(true);
-        setMessage("If an account with that email exists, you will receive a password reset link.");
+
+        const response = await authService.requestPasswordReset(data.email);
+        console.log(response);
+        if (response.success) {
+            setMessage("If an account with that email exists, you will receive a password reset link.");
+        } else {
+            setErrorMessage(response.error.message);
+        }
+
+        setIsDisabled(false);
     };
 
     return (
         <FormContainer>
             <h2 className="text-2xl font-semibold text-center">Reset Password</h2>
             {message && <p className="text-green-500 text-sm text-center mt-2">{message}</p>}
+            {errorMessage && <p className="text-red-500 text-sm text-center mt-2">{errorMessage}</p>}
 
             {/* Password Reset Form */}
             <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">

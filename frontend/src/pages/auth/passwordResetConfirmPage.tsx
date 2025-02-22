@@ -1,8 +1,10 @@
 import {useForm} from "react-hook-form";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
 import {Button} from "@/components/ui/button";
 import FormContainer from "@/components/container/FormContainer.tsx";
+import {toast} from "react-toastify";
+import authService from "@/services/authService.ts";
 
 function PasswordResetConfirmPage() {
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
@@ -13,14 +15,21 @@ function PasswordResetConfirmPage() {
     // Extract token from URL (e.g., /reset-password/confirm?token=abc123)
     const token = new URLSearchParams(location.search).get("token");
 
-    const onSubmit = async (data: any) => {
-        console.log("Reset Confirm Data:", {token, ...data});
+    useEffect(() => {
+        if (!token) {
+            toast.error("Invalid password reset link. Please request a new one.");
+            navigate("/reset-password");
+        }
+    }, []);
 
-        // Simulate API request
-        setTimeout(() => {
-            setMessage("Your password has been successfully reset. You can now log in.");
-            setTimeout(() => navigate("/login"), 2000);
-        }, 1000);
+    const onSubmit = async (data: any) => {
+        const response = await authService.resetPasswordConfirm(token, data.password);
+        if (response.success) {
+            toast.success("Password reset successfully. You can now log in.");
+            navigate("/login");
+        } else {
+            toast.error(response.error);
+        }
     };
 
     return (
