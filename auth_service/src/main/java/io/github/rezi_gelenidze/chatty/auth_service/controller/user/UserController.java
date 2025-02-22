@@ -3,7 +3,7 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller.user;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.RegisterRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.UserDetailsResponse;
 import io.github.rezi_gelenidze.chatty.auth_service.entity.User;
-import io.github.rezi_gelenidze.chatty.auth_service.service.UserService;
+import io.github.rezi_gelenidze.chatty.auth_service.service.user.UserService;
 
 import io.github.rezi_gelenidze.chatty.auth_service.util.SecurityUtil;
 import jakarta.validation.Valid;
