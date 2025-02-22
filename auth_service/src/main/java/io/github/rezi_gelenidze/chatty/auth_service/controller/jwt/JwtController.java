@@ -3,6 +3,7 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller.jwt;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.jwt.*;
 import io.github.rezi_gelenidze.chatty.auth_service.service.jwt.JwtService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/jwt")
+@Tag(name = "JWT", description = "JWT management endpoints")
 public class JwtController {
     private final JwtService jwtService;
 

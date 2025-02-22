@@ -3,12 +3,14 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller.user;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.PasswordResetConfirmRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.PasswordResetRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.service.user.PasswordResetService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Password Reset", description = "Password reset endpoints")
 public class PasswordResetController {
     
     private final PasswordResetService passwordResetService;
@@ -26,7 +28,7 @@ public class PasswordResetController {
 
     @PostMapping("/reset-password-confirm")
     public ResponseEntity<String> resetPasswordConfirm(@RequestBody @Valid PasswordResetConfirmRequest passwordResetConfirmRequest) {
-        passwordResetService.resetPassword(passwordResetConfirmRequest.getToken(), passwordResetConfirmRequest.getPassword());
+        passwordResetService.resetPassword(passwordResetConfirmRequest.getToken(), passwordResetConfirmRequest.getNewPassword());
 
         return ResponseEntity.ok("Password successfully reset! You can now log in.");
     }

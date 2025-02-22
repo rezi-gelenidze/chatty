@@ -3,12 +3,14 @@ package io.github.rezi_gelenidze.chatty.auth_service.controller.user;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.EmailActivationRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.dto.user.EmailResendActivationRequest;
 import io.github.rezi_gelenidze.chatty.auth_service.service.user.EmailVerificationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Email Verification", description = "Email verification endpoints")
 public class EmailVerificationController {
     
     private final EmailVerificationService emailVerificationService;
