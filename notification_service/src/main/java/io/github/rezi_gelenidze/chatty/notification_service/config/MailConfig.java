@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.config;
+package io.github.rezi_gelenidze.chatty.notification_service.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
