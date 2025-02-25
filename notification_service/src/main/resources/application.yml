@@ -1,0 +1,39 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: notification-service
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    listener:
+      simple:
+        concurrency: 3
+        max-concurrency: 6
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI}
+    fetch-registry: true
+    register-with-eureka: true
+
+rabbitmq:
+  exchange: ${RABBITMQ_EXCHANGE}
+  queue:
+    email: ${RABBITMQ_EMAIL_QUEUE}
+    notification: ${RABBITMQ_NOTIFICATION_QUEUE}
+  routing-key:
+    email: ${RABBITMQ_EMAIL_ROUTING_KEY}
+    notification: ${RABBITMQ_NOTIFICATION_ROUTING_KEY}
