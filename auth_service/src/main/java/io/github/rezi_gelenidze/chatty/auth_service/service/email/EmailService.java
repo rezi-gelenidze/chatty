@@ -1,18 +1,15 @@
-package io.github.rezi_gelenidze.chatty.auth_service.service.email;
+ package io.github.rezi_gelenidze.chatty.auth_service.service.email;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import io.github.rezi_gelenidze.chatty.auth_service.service.rabbitmq.RabbitMQProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 public class EmailService {
-    private final JavaMailSender mailSender;
+    private final RabbitMQProducer rabbitMQProducer;
 
     private final TemplateEngine templateEngine;
 
@@ -29,13 +26,13 @@ public class EmailService {
     private String passwordResetRedirectPath;
 
     @Autowired
-    public EmailService(JavaMailSender mailSender, TemplateEngine templateEngine) {
-        this.mailSender = mailSender;
+    public EmailService(RabbitMQProducer rabbitMQProducer, TemplateEngine templateEngine) {
+        this.rabbitMQProducer = rabbitMQProducer;
         this.templateEngine = templateEngine;
     }
 
     /**
-     * Sends an email using a Thymeleaf template.
+     * Sends an email using RabbitMQ after processing the Thymeleaf template.
      *
      * @param to           Recipient email address
      * @param subject      Email subject
@@ -44,17 +41,7 @@ public class EmailService {
      */
     private void sendEmail(String to, String subject, String templateName, Context context) {
         String htmlContent = templateEngine.process(templateName, context);
-
-        MimeMessage message = mailSender.createMimeMessage();
-        try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlContent, true);
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send email", e);
-        }
+        rabbitMQProducer.sendEmailNotification(to, subject, htmlContent);
     }
 
     /**
