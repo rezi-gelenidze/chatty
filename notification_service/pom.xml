@@ -31,6 +31,18 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!-- MongoDB for storing notifications -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!-- WebSockets for real-time notifications -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!-- RabbitMQ for consuming notifications and emails -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

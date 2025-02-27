@@ -5,6 +5,10 @@ spring:
   application:
     name: notification-service
 
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?authSource=admin
+
   rabbitmq:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
@@ -33,7 +37,7 @@ rabbitmq:
   exchange: ${RABBITMQ_EXCHANGE}
   queue:
     email: ${RABBITMQ_EMAIL_QUEUE}
-    notification: ${RABBITMQ_NOTIFICATION_QUEUE}
+    push-notification: ${RABBITMQ_PUSH_NOTIFICATION_QUEUE}
   routing-key:
     email: ${RABBITMQ_EMAIL_ROUTING_KEY}
-    notification: ${RABBITMQ_NOTIFICATION_ROUTING_KEY}
+    push-notification: ${RABBITMQ_PUSH_NOTIFICATION_ROUTING_KEY}
