@@ -48,6 +48,14 @@ public class PasswordResetService {
     public void resetPassword(String token, String newPassword) {
         String email = tokenService.verifyToken(token, TokenType.PASSWORD_RESET);
 
+        changePassword(email, newPassword);
+    }
+
+
+    /**
+     * Changes the user's password. Used in password reset and change password.
+     */
+    public void changePassword(String email, String newPassword) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty())
             throw new UserNotFoundException("User not found");
@@ -55,7 +63,5 @@ public class PasswordResetService {
         User user = optionalUser.get();
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-
-        emailService.sendPasswordResetSuccessEmail(user.getEmail());
     }
 }
