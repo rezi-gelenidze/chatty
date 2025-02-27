@@ -16,14 +16,14 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.queue.email}")
     private String EMAIL_QUEUE_NAME;
 
-    @Value("${rabbitmq.queue.notification}")
-    private String NOTIFICATION_QUEUE_NAME;
+    @Value("${rabbitmq.queue.push-notification}")
+    private String PUSH_NOTIFICATION_QUEUE_NAME;
 
     @Value("${rabbitmq.routing-key.email}")
     private String EMAIL_ROUTING_KEY;
 
-    @Value("${rabbitmq.routing-key.notification}")
-    private String NOTIFICATION_ROUTING_KEY;
+    @Value("${rabbitmq.routing-key.push-notification}")
+    private String PUSH_NOTIFICATION_ROUTING_KEY;
 
     @Bean
     public Queue emailQueue() {
@@ -32,7 +32,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue pushQueue() {
-        return new Queue(NOTIFICATION_QUEUE_NAME, true);
+        return new Queue(PUSH_NOTIFICATION_QUEUE_NAME, true);
     }
 
     @Bean
@@ -47,7 +47,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding pushBinding(Queue pushQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(pushQueue).to(exchange).with(NOTIFICATION_ROUTING_KEY);
+        return BindingBuilder.bind(pushQueue).to(exchange).with(PUSH_NOTIFICATION_ROUTING_KEY);
     }
 
     @Bean

@@ -6,27 +6,25 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class RabbitMQConsumer {
     private final EmailService emailService;
+    private final PushNotificationService pushNotificationService;
 
     @Autowired
-    public RabbitMQConsumer(EmailService emailService) {
+    public RabbitMQConsumer(EmailService emailService, PushNotificationService pushNotificationService) {
         this.emailService = emailService;
+        this.pushNotificationService = pushNotificationService;
     }
 
-    @RabbitListener(queues = "email-queue")
+    @RabbitListener(queues = "${rabbitmq.queue.email}")
     public void receiveEmail(EmailMessage emailMessage) {
-        emailService.sendEmail(
-                emailMessage.getTo(),
-                emailMessage.getSubject(),
-                emailMessage.getHtmlContent()
-        );
+        emailService.sendEmail(emailMessage.getTo(), emailMessage.getSubject(), emailMessage.getHtmlContent());
     }
 
-    @RabbitListener(queues = "notification-queue")
-    public void receiveNotification(NotificationMessage notificationMessage) {
-        // TODO: Implement push notification sending logic
-        System.out.println("Sending push notification to " + notificationMessage.getTo() + ": " + notificationMessage.getBody());
+    @RabbitListener(queues = "${rabbitmq.queue.push-notification}")
+    public void receivePushNotification(NotificationMessage notificationMessage) {
+        pushNotificationService.sendPushNotification(notificationMessage.getUserId(), notificationMessage);
     }
 }
