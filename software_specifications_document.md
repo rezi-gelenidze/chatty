@@ -96,9 +96,9 @@ with independent services handling authentication, messaging, media storage, and
 
 ```mermaid
 graph TD;
-    A[Frontend React.js] -->|API Calls| B[API Gateway + Eureka];
+    A[Frontend React.js] -->|REST/WebSocket| B[API Gateway + Eureka];
     
-    B -->|Auth Service| Microservices
+    B --> Microservices
     
     Microservices --> Databases
     Microservices --> Cache
