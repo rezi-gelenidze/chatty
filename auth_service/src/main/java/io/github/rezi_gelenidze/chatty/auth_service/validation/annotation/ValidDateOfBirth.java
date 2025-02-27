@@ -1,15 +1,12 @@
-package io.github.rezi_gelenidze.chatty.auth_service.validation;
+package io.github.rezi_gelenidze.chatty.auth_service.validation.annotation;
 
 import io.github.rezi_gelenidze.chatty.auth_service.constants.ValidationConstants;
+import io.github.rezi_gelenidze.chatty.auth_service.validation.validator.DateOfBirthValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import java.lang.annotation.*;
-import java.time.LocalDate;
-import java.time.Period;
 
 @Documented
 @Constraint(validatedBy = DateOfBirthValidator.class)

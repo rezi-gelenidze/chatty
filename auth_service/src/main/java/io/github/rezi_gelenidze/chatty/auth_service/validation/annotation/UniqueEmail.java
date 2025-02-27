@@ -1,5 +1,6 @@
-package io.github.rezi_gelenidze.chatty.auth_service.validation;
+package io.github.rezi_gelenidze.chatty.auth_service.validation.annotation;
 
+import io.github.rezi_gelenidze.chatty.auth_service.validation.validator.UniqueEmailValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

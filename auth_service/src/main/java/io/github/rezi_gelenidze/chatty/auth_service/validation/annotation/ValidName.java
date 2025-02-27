@@ -1,4 +1,4 @@
-package io.github.rezi_gelenidze.chatty.auth_service.validation;
+package io.github.rezi_gelenidze.chatty.auth_service.validation.annotation;
 
 import io.github.rezi_gelenidze.chatty.auth_service.constants.ValidationConstants;
 import jakarta.validation.Constraint;

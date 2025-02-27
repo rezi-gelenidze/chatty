@@ -1,13 +1,14 @@
-package io.github.rezi_gelenidze.chatty.auth_service.validation;
+package io.github.rezi_gelenidze.chatty.auth_service.validation.validator;
 
 import io.github.rezi_gelenidze.chatty.auth_service.repository.UserRepository;
+import io.github.rezi_gelenidze.chatty.auth_service.validation.annotation.UniqueEmail;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
     private final UserRepository userRepository;
 
     @Autowired
