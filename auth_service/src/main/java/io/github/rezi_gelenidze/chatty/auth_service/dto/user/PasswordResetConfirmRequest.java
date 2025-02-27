@@ -1,6 +1,6 @@
 package io.github.rezi_gelenidze.chatty.auth_service.dto.user;
 
-import io.github.rezi_gelenidze.chatty.auth_service.validation.ValidPassword;
+import io.github.rezi_gelenidze.chatty.auth_service.validation.annotation.ValidPassword;
 import lombok.Data;
 
 

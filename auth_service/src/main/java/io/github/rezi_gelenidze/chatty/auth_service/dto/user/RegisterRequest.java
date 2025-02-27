@@ -1,8 +1,8 @@
 package io.github.rezi_gelenidze.chatty.auth_service.dto.user;
 
 import io.github.rezi_gelenidze.chatty.auth_service.constants.ValidationConstants;
-import io.github.rezi_gelenidze.chatty.auth_service.validation.*;
 
+import io.github.rezi_gelenidze.chatty.auth_service.validation.annotation.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
