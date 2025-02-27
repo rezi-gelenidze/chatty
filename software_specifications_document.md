@@ -94,7 +94,42 @@ The chat application is a **publicly deployed, real-time messaging platform** th
 securely** using **E2E-encrypted messaging, voice, and video calls**. It operates in a **microservices architecture**,
 with independent services handling authentication, messaging, media storage, and notifications.
 
----
+```mermaid
+graph TD;
+    A[Frontend React.js] -->|API Calls| B[API Gateway + Eureka];
+    
+    B -->|Auth Service| Microservices
+    
+    Microservices --> Databases
+    Microservices --> Cache
+    Microservices --> Messaging
+    Microservices --> External-Services
+    
+    subgraph "Microservices"
+        C[Auth Service]
+        D[Chat Service]
+        E[Notification Service]
+        F[Call Service]
+    end
+
+    subgraph "Databases"
+        G[(PostgreSQL)]
+        H[(MongoDB)]
+    end
+    
+    subgraph "Messaging"
+        I[(RabbitMQ)]
+    end
+
+    subgraph "Cache"
+        J[(Redis)]
+    end
+
+    subgraph "External-Services"
+        K[WebRTC]
+        L[AWS S3]
+    end
+```
 
 ## **3. Functional Requirements**
 
